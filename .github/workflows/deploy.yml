@@ -63,11 +63,11 @@ jobs:
         run: |
           # Set project name based on branch
           if [[ "${{ github.ref_name }}" == "master" ]]; then
-            PROJECT_NAME="rbd-landings"
+            PROJECT_NAME="rbd-pl-blog-prod"
             BRANCH="production"
             echo "Using production project: $PROJECT_NAME"
           else
-            PROJECT_NAME="rbd-landings-dev"
+            PROJECT_NAME="rbd-pl-blog-dev"
             BRANCH="preview"
             echo "Using development project: $PROJECT_NAME"
           fi
