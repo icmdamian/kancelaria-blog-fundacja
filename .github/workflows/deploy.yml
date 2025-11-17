@@ -72,9 +72,14 @@ jobs:
             echo "Using development project: $PROJECT_NAME"
           fi
 
-          # Skip project existence check and creation - just try to deploy
-          # If project doesn't exist, the deploy command will fail with a clear error
-          # If project exists, it will deploy correctly
+          # Check if project exists, create if it doesn't
+          echo "Checking if project $PROJECT_NAME exists..."
+          if ! wrangler pages project list 2>&1 | grep -q "$PROJECT_NAME"; then
+            echo "Project $PROJECT_NAME not found. Creating..."
+            wrangler pages project create "$PROJECT_NAME" --production-branch="$BRANCH"
+          else
+            echo "Project $PROJECT_NAME already exists."
+          fi
 
           # Deploy to Cloudflare Pages
           echo "Deploying to $BRANCH environment for project $PROJECT_NAME"
