@@ -1,0 +1,173 @@
+---
+import HeroFormVersion4 from "./HeroFormVersion4.astro";
+import HeroFormVersion5 from "./HeroFormVersion5.astro";
+---
+
+<section class="section bg-rbd-secondary overflow-hidden" id="hero-section">
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 items-center" id="hero-standard-layout">
+      <!-- Common content - always displayed immediately -->
+      <div class="md:block relative" id="hero-left-content">
+        <div class="absolute hidden md:block top-[-8rem] left-[-4rem]">
+          <svg width="516" height="544" viewBox="0 0 516 544" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M239.043 95.6814V119.505H489.579V166.289H516.002V95.6814H239.043Z" fill="#DA1E35"/>
+            <path d="M489.576 509.82L35.9876 415.942L23.3519 117.092L268.558 21.2543L246.437 0.474854L0 98.4936L5.27336 437.596L5.31853 437.585V437.596L515.852 543.574L515.999 442.024H489.576V509.82Z" fill="#DA1E35"/>
+          </svg>
+        </div>
+          
+        <h1 class="h1 hero-header hidden md:inline">
+          Skuteczne 
+          <br />
+          oddłużanie nawet 
+          <br />
+          w 48h
+        </h1>
+        <p class="md:hidden text-[14px] text-white text-center mb-8">
+          Pomogliśmy już 3 000+ osobom umorzyć nawet 100 % długów i zatrzymać windykację.
+        </p>
+        <p class="hidden md:block text-left text-base max-w-md text-white">
+          Pomogliśmy już 
+          <span class="text-[24px]">3 000+</span> 
+          osobom umorzyć 
+          nawet 100% długów i zatrzymać windykację 
+          — Twoja historia może być następna.
+        </p>
+      </div>
+      
+      <!-- Form container - immediately show default form (Version 5) for better performance -->
+      <div id="hero-forms-container" class="relative">
+        <!-- Both forms are in the same container but only one will be visible -->
+        <div id="hero-form-standard" class="block">
+          <HeroFormVersion5 />
+        </div>
+        
+        <!-- Alternative form is completely hidden initially -->
+        <div id="hero-form-alt" class="hidden">
+          <HeroFormVersion4 />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  // Use requestIdleCallback to check PostHog after critical content is rendered
+  const checkPostHogWhenIdle = () => {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => checkPostHogAvailability(), { timeout: 2000 });
+    } else {
+      // Fallback for browsers that don't support requestIdleCallback
+      setTimeout(checkPostHogAvailability, 100);
+    }
+  };
+  
+  document.addEventListener('DOMContentLoaded', checkPostHogWhenIdle);
+  
+  // Set a maximum time to wait for PostHog (much shorter than before)
+  let posthogTimeout;
+  let checkAttempts = 0;
+  const MAX_ATTEMPTS = 20; // Maximum number of attempts to check PostHog
+  
+  // Check if PostHog is loaded and apply variant if needed
+  function checkPostHogAvailability() {
+    checkAttempts++;
+    
+    // Set a shorter timeout (300ms instead of 1000ms)
+    if (!posthogTimeout) {
+      posthogTimeout = setTimeout(() => {
+        console.warn('PostHog loading timeout - keeping default form');
+        // No need to do anything as default form is already showing
+      }, 300);
+    }
+    
+    // Check if PostHog exists and is fully initialized
+    if (window.posthog && typeof window.posthog.getFeatureFlag === 'function') {
+      try {
+        // Wait for feature flags to be ready
+        if (typeof posthog.onFeatureFlags === 'function') {
+          // Clear the timeout since we're handling it with onFeatureFlags
+          clearTimeout(posthogTimeout);
+          
+          posthog.onFeatureFlags(() => {
+            // Now feature flags are definitely loaded
+            const flagValue = posthog.getFeatureFlag('hero-a-b-test');
+            console.log('PostHog feature flag loaded:', flagValue);
+            
+            // If we have a flag value and it's the alt version, switch forms
+            if (flagValue === 'hero_alt') {
+              switchToAltForm();
+            } else {
+              // Track that standard was shown (already visible)
+              posthog.capture('hero_ab_test_viewed', { variant: 'hero_standard' });
+              console.log('Keeping version 5 form based on feature flag');
+            }
+          });
+        } else {
+          // Fallback if onFeatureFlags is not available
+          const flagValue = posthog.getFeatureFlag('hero-a-b-test');
+          
+          if (flagValue === 'hero_alt') {
+            switchToAltForm();
+          } else {
+            posthog.capture('hero_ab_test_viewed', { variant: 'hero_standard' });
+            console.log('Keeping version 5 form based on feature flag');
+          }
+          
+          // Clear timeout since we processed the flag
+          clearTimeout(posthogTimeout);
+        }
+      } catch (error) {
+        console.error('Error with PostHog feature flags:', error);
+        // Keep showing default form (already visible)
+        
+        // If we've tried too many times, stop trying
+        if (checkAttempts < MAX_ATTEMPTS) {
+          setTimeout(checkPostHogAvailability, 100 * Math.min(checkAttempts, 10));
+        }
+      }
+    } else {
+      // PostHog isn't ready yet, check again shortly with exponential backoff
+      console.log(`PostHog not yet available, retrying... (attempt ${checkAttempts})`);
+      
+      // Stop trying after MAX_ATTEMPTS
+      if (checkAttempts < MAX_ATTEMPTS) {
+        // Exponential backoff with a maximum of 1 second
+        const delay = Math.min(100 * Math.pow(1.5, Math.min(checkAttempts, 10)), 1000);
+        setTimeout(checkPostHogAvailability, delay);
+      } else {
+        console.warn(`Gave up waiting for PostHog after ${MAX_ATTEMPTS} attempts`);
+      }
+    }
+  }
+
+  // Function to switch to alternative form if needed
+  function switchToAltForm() {
+    try {
+      const formStandard = document.getElementById('hero-form-standard');
+      const formAlt = document.getElementById('hero-form-alt');
+      
+      if (!formStandard || !formAlt) {
+        console.error("Missing hero form elements");
+        return;
+      }
+      
+      // Hide standard form and show alt form
+      formStandard.classList.add('hidden');
+      formAlt.classList.remove('hidden');
+      
+      // Track which variant was shown
+      posthog.capture('hero_ab_test_viewed', { variant: 'hero_alt' });
+      console.log('Switched to version 4 form variant based on feature flag');
+    } catch (error) {
+      console.error('Error switching to alt form:', error);
+    }
+  }
+</script>
+
+<style>
+  @reference "../styles/global.css";
+
+  .hero-header {
+    @apply text-white text-[46px] font-semibold leading-[50px] mb-8;
+  }
+</style>

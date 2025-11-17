@@ -1,0 +1,110 @@
+---
+import ArticleAuthor from '../../components/blog/ArticleAuthor.astro';
+import BlogHeader from '../../components/blog/BlogHeader.astro';
+import Button from '../../components/common/Button.astro';
+import FaqItem from '../../components/FaqItem.astro';
+import BlocksContentRenderer from '../../components/react/BlocksContentRenderer';
+import Layout from '../../Layout.astro';
+import { StrapiPostEndpoints } from '../../lib/strapi';
+
+export const getStaticPaths = async () => {
+  const posts = await StrapiPostEndpoints.getAllPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+};
+
+const { slug } = Astro.params;
+if (!slug) {
+  return new Response('Slug is missing', { status: 500 });
+}
+
+const post = await StrapiPostEndpoints.getPostBySlug(slug);
+if (!post) {
+  return new Response('Post not found', { status: 404 });
+}
+
+const { title, pictureUrl, introduction, content, faq } = post;
+
+const pageTitle = `${title} - Blog - Rodzina bez długów`;
+const description = `${title} - Artykuł`;
+---
+
+<Layout title={pageTitle} description={description} ogImage={pictureUrl} ogType="article">
+  <div>
+    <BlogHeader title={title} imageUrl={pictureUrl} />
+    <div class="text-slate-800 lg:my-12">
+      <div class="max-w-4xl mx-auto">
+        <div class="p-4 space-y-12">
+          <section>
+            <p>{introduction}</p>
+          </section>
+          <section>
+            <h2 class="h2 text-2xl text-rbd-primary font-bold mt-4 mb-2">Spis treści</h2>
+            <ul class="list-decimal ml-6 mb-4">
+              {
+                content.map((section, index) => (
+                  <li class="text-blue-500 hover:text-blue-800">
+                    <a href={`#${String(index)}`}>{section.title}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+          <section>
+            {
+              content.map((section, index) => (
+                <div id={String(index)}>
+                  {section.title && (
+                    <h2 class="h2 text-2xl text-rbd-primary font-bold mt-4 mb-2">
+                      {section.title}
+                    </h2>
+                  )}
+                  {section.content && <BlocksContentRenderer content={section.content} />}
+                  {section.pictureUrl && (
+                    <img
+                      src={section.pictureUrl}
+                      alt={section.title}
+                      loading="lazy"
+                      class="rounded-lg aspect-video object-cover"
+                    />
+                  )}
+                </div>
+              ))
+            }
+          </section>
+        </div>
+      </div>
+      {
+        faq.length > 0 && (
+          <section class="p-4 bg-slate-50">
+            <div class="max-w-4xl mx-auto">
+              <h2 class="h2 text-2xl text-rbd-primary font-bold mt-8 mb-6">
+                Najczęściej zadawane pytania (FAQ)
+              </h2>
+              <ul class="space-y-4 mb-6">
+                {faq.map((f) => (
+                  <li>
+                    <FaqItem question={f.question}>
+                      <BlocksContentRenderer content={f.answer} />
+                    </FaqItem>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )
+      }
+      <section class="p-4">
+        <div class="max-w-4xl mx-auto">
+          <div class="flex flex-wrap gap-4 items-center justify-between">
+            <ArticleAuthor />
+            <div>
+              <Button>Sprawdź bezpłatnie, czy możemy Ci pomóc</Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,60 @@
+---
+export interface MediaLogo {
+	src: string;
+	alt: string;
+}
+
+export interface Props {
+	title?: string;
+	logos?: MediaLogo[];
+}
+
+const {
+	title = "Napisali o nas:",
+	logos = [
+		{
+			src: "/assets/icons/tvn-logo.svg",
+			alt: "TVN logo",
+		},
+		{
+			src: "/assets/icons/tvp-info-logo.svg",
+			alt: "TVP Info logo",
+		},
+		{
+			src: "/assets/icons/onet-logo.svg",
+			alt: "Onet logo",
+		},
+		{
+			src: "/assets/icons/republika-logo.svg",
+			alt: "Republika logo",
+		},
+		{
+			src: "/assets/icons/radiozet-logo.svg",
+			alt: "Radio Zet logo",
+		},
+	],
+} = Astro.props;
+---
+
+<section class="section border-t border-gray-200">
+  <div class="container">
+    <h2 class="h2 text-center md:!mb-[80px] text-rbd-primary">
+      {title}
+    </h2>
+    
+    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 max-w-5xl mx-auto">
+      {logos.map(logo => (
+        <div class="flex items-center justify-center w-[80px] md:w-[140px] h-[45px] md:h-[60px]">
+          <img 
+            src={logo.src} 
+            alt={logo.alt} 
+            width="140"
+            height="60"
+            class="max-w-full max-h-full object-contain"
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

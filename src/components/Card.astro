@@ -1,0 +1,16 @@
+<div class="card">
+  <slot />
+</div>
+
+<style>
+   @reference "../styles/global.css";
+  
+  .card {
+    @apply bg-white border-b-4 border-rbd-primary p-8 rounded-lg flex flex-col transition-transform duration-300 ease-in-out;
+    box-shadow: 0px 1px 10px 0px rgba(119, 119, 119, 0.18);
+  }
+
+  .card:hover {
+    @apply transform -translate-y-1;
+  }
+</style>

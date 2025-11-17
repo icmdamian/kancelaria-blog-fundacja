@@ -1,0 +1,59 @@
+---
+import FaqItem from './FaqItem.astro';
+
+const faqs: { id: number; question: string; answer: string }[] = [
+  {
+    id: 1,
+    question: 'Ile kosztuje oddłużanie?',
+    answer:
+      'Koszt oddłużania ustalamy indywidualnie - zależy on od wysokości zadłużenia oraz stopnia skomplikowania sprawy. Oferujemy możliwość spłaty w ratach, które dostosowujemy do Twojej sytuacji finansowej.',
+  },
+  {
+    id: 2,
+    question: 'Ile to będzie trwało?',
+    answer: 'Cały proces oddłużania zazwyczaj trwa od 3 do 6 miesięcy.',
+  },
+  {
+    id: 3,
+    question: 'Czy na pewno się to uda?',
+    answer:
+      'Działamy rzetelnie i profesjonalnie - to zapisujemy w umowie. Mamy ponad 10 lat doświadczenia i pomogliśmy już ponad 3000 osobom. Jeśli podczas konsultacji nasz doradca stwierdzi, że możemy Ci pomóc - to znaczy, że są realne szanse na skuteczne oddłużenie.',
+  },
+  {
+    id: 4,
+    question: 'Czy pomagacie osobom z zagranicy?',
+    answer:
+      'Tak, pomagamy osobom mieszkającym w różnych krajach Europy. Wszystko odbywa się zdalnie - przez internet i całkowicie anonimowo.',
+  },
+  {
+    id: 5,
+    question: 'Jakich dokumentów potrzebujecie ode mnie?',
+    answer:
+      'Na początku nie musisz przygotowywać żadnych dokumentów. Wspólnie zbierzemy wszystkie potrzebne informacje w pierwszym etapie współpracy. Przeprowadzimy Cię przez ten proces krok po kroku.',
+  },
+  {
+    id: 6,
+    question: 'Jak mogę skorzystać z pomocy?',
+    answer:
+      'Wystarczy, że wypełnisz formularz kontaktowy. Oddzwonimy do Ciebie i podczas bezpłatnej konsultacji nasz doradca wyjaśni, jak możemy Ci pomóc.',
+  },
+];
+---
+
+<section class="section bg-rbd-gray-light mb-6">
+  <div class="container max-w-2xl">
+    <h2 class="h2 text-center text-[28px] md:text-[36px] font-semibold mb-6 text-rbd-primary">
+      Najczęściej zadawane pytania (FAQ)
+    </h2>
+
+    <ul>
+      {
+        faqs.map((item) => (
+          <li class="mb-4">
+            <FaqItem question={item.question}>{item.answer}</FaqItem>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

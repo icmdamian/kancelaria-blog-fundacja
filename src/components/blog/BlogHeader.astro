@@ -1,0 +1,27 @@
+---
+import Container from '../common/Container.astro';
+
+interface Props {
+  title: string;
+  imageUrl?: string;
+}
+
+const { title, imageUrl } = Astro.props;
+---
+
+<header class="bg-rbd-primary">
+  <Container>
+    <div class="flex flex-col lg:flex-row lg:items-center">
+      <div class="p-4 lg:py-8 flex-1">
+        <h1 class="text-xl lg:text-3xl text-white font-medium">{title}</h1>
+      </div>
+      {
+        imageUrl && (
+          <div>
+            <img src={imageUrl} alt="Article image" loading="lazy" class="w-full object-cover max-h-128" />
+          </div>
+        )
+      }
+    </div>
+  </Container>
+</header>

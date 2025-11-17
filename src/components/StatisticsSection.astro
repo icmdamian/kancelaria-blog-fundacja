@@ -1,0 +1,52 @@
+---
+import StatItem from "./StatItem.astro";
+
+export interface StatData {
+	value: string;
+	description: string;
+}
+
+export interface Props {
+	stats?: StatData[];
+}
+
+const {
+	stats = [
+		{ value: "3 000+", description: "osób odzyskało<br>finansowy oddech" },
+		{
+			value: "210 mln zł",
+			description: "łączna wartość<br>umorzonych zobowiązań",
+		},
+		{ value: "98%", description: "skutecznych<br>wniosków" },
+		{ value: "6+ lat", description: "doświadczenia<br>prawnego" },
+	],
+} = Astro.props;
+---
+
+<section class="section bg-rbd-gray-light py-12 md:py-20 relative overflow-hidden">
+  <div class="absolute hidden md:block bottom-[-10rem] left-[5rem]">
+    <svg width="332" height="350" viewBox="0 0 332 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M153.801 61.257V76.5855H314.998V106.687H331.999V61.257H153.801Z" fill="white"/>
+      <path d="M314.999 327.719L23.1549 267.316L15.0249 75.0329L172.793 13.3697L158.56 0L0 63.0664L3.39294 281.249L3.42201 281.242V281.249L331.906 349.437L332 284.098H314.999V327.719Z" fill="white"/>
+    </svg>      
+  </div>
+  <div class="container relative">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 justify-items-center">
+      <h2 class="h2 mb-12 md:!mb-32 w-full font-bold text-rbd-secondary leading-tight text-2xl md:text-[36px] text-center md:text-left">
+        <span class="md:max-w-xs inline-block">
+          Rodzina <br />
+          bez długów
+          <span class="text-nowrap">
+            w liczbach
+          </span>
+        </span>
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-14 md:gap-y-22 gap-x-8">
+        {stats.map((stat) => (
+          <StatItem value={stat.value} description={stat.description} />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

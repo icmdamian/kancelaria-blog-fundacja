@@ -1,0 +1,80 @@
+---
+
+---
+
+<style>
+	.testimonial-item::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		background-repeat: no-repeat;
+	}
+
+	@media (max-width: 767px) {
+		.testimonial-item::before {
+			width: 17px;
+			height: 149px;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='149' viewBox='0 0 17 149' fill='none'%3E%3Cpath d='M2.59649 145.798L0 4.28927L9.08772 0.394531L16.2281 148.395L2.59649 145.798Z' fill='%23DA1E35'/%3E%3C/svg%3E");
+		}
+	}
+
+	@media (min-width: 768px) {
+		.testimonial-item::before {
+			width: 25px;
+			height: 228px;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='228' viewBox='0 0 25 228' fill='none'%3E%3Cpath d='M4 224L0 6L14 0L25 228L4 224Z' fill='%23DA1E35'/%3E%3C/svg%3E");
+		}
+	}
+</style>
+
+<section class="section overflow-hidden">
+	<div class="container">
+		<div class="mb-8">
+			<h2 class="h2 text-center text-rbd-primary">
+				Historie ludzi, którym pomogliśmy
+			</h2>
+		</div>
+
+		<div class="flex flex-col md:flex-row items-center gap-8 max-w-6xl mx-auto">
+			<div class="w-full md:w-7/12 relative">
+				<div class="flex flex-col pl-14 testimonial-item">
+					<div class="mb-4">
+						<span
+							class="text-[20px] md:text-[36px] font-semibold text-rbd-primary"
+						>
+							120 000 zł długów <span class="text-rbd-red">→ 0 zł</span>
+						</span>
+					</div>
+
+					<p class="text-rbd-primary mb-4 text-[14px] md:text-[24px]">
+						„Po miesiącach nieprzespanych nocy dziś zaczynam nowy rozdział.
+						Dzięki Rodzinie Bez Długów mogę znów planować przyszłość.”
+					</p>
+
+					<p class="text-rbd-primary text-[14px] md:text-base">
+						Anna, Warszawa
+					</p>
+				</div>
+			</div>
+
+			<div class="w-full md:w-5/12">
+				<div class="overflow-hidden ms-auto rounded-lg h-[250px] md:h-[450px]">
+					<img
+						src="/testimonial-section.webp"
+						width="373"
+						height="450"
+						alt="Anna z Warszawy - osoba która skorzystała z naszych usług oddłużania"
+						class="object-cover w-full h-full"
+						loading="lazy"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<div class="text-center mt-12">
+			<a href="#formularz" class="button"> Skorzystaj z bezpłatnej analizy </a>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,40 @@
+---
+// dont display header if it is /thank-you page
+const currentPath = Astro.url.pathname;
+const isThankYouPage =
+	currentPath === "/thank-you" || currentPath === "/thank-you/";
+---
+
+{
+	!isThankYouPage && (
+		<header class="py-[16px] md:py-[18px] sticky bg-white shadow top-0 z-100">
+			<div class="container">
+				<div class="flex items-center justify-between gap-[10px]">
+					<a href="/">
+						<img
+							class="w-[77px] md:w-[120px]"
+							src="/logo.svg"
+							alt="Rodzina Bez Długów"
+						/>
+					</a>
+					<div class="text-rbd-primary flex items-center gap-[12px] md:gap-[32px]">
+						<div>
+							<span class="hidden md:inline">Zadzwoń:</span>
+							<a
+								href="tel:+48500577570"
+								class="font-semibold text-nowrap text-[15px] md:text-[24px]"
+							>
+								500 577 570
+							</a>
+						</div>
+						<span class="hidden md:inline">lub:</span>
+						<a href="#formularz" class="button">
+							<span class="hidden md:inline">Zacznij ZA DARMO</span>
+							<span class="md:hidden text-[11px]">Zacznij ZA DARMO</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</header>
+	)
+}

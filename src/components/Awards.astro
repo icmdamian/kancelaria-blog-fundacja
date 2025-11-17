@@ -1,0 +1,58 @@
+---
+export interface Award {
+	src: string;
+	alt: string;
+}
+
+export interface Props {
+	title?: string;
+	awards?: Award[];
+}
+
+const {
+	title = "Nasze nagrody:",
+	awards = [
+		{
+			src: "/assets/icons/award-3.svg",
+			alt: "Medal najlepsza kancelaria oddłużeniowa",
+		},
+		{
+			src: "/assets/icons/award-1.svg",
+			alt: "Tarcza przed długiem",
+		},
+		{
+			src: "/assets/icons/award-2.svg",
+			alt: "Orzeł ochrony finansowej",
+		},
+	],
+} = Astro.props;
+---
+
+<section class="section bg-rbd-gray-light relative overflow-hidden">
+  <div class="absolute hidden md:block bottom-[-10rem] left-[5rem]">
+    <svg width="332" height="350" viewBox="0 0 332 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M153.801 61.257V76.5855H314.998V106.687H331.999V61.257H153.801Z" fill="white"/>
+      <path d="M314.999 327.719L23.1549 267.316L15.0249 75.0329L172.793 13.3697L158.56 0L0 63.0664L3.39294 281.249L3.42201 281.242V281.249L331.906 349.437L332 284.098H314.999V327.719Z" fill="white"/>
+    </svg>      
+  </div>
+  <div class="container flex flex-col md:flex-row">
+    <div class="md:w-1/2">
+      <h2 class="h2 text-center text-2xl md:text-3xl font-bold text-rbd-secondary mb-10">
+        {title}
+      </h2>
+    </div>
+    <div class="md:w-1/2">
+      <div class="flex justify-center items-center gap-8">
+        {awards.map(award => (
+          <div class="flex items-center justify-center">
+            <img 
+              src={award.src} 
+              alt={award.alt}
+              class="w-[97px] h-[114px] md:w-[205px] md:h-[240px] object-contain"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

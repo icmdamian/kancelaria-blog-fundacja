@@ -1,0 +1,277 @@
+---
+import HeroCTATextVersion5 from "./HeroCTATextVersion5.astro";
+import FormInput from "./FormInput.astro";
+---
+
+<style>
+	@reference '../styles/global.css';
+
+	.form-header {
+		@apply text-[20px] md:text-[24px] font-bold text-rbd-secondary mb-6;
+	}
+
+	.form-container {
+		@apply min-h-[65svh] md:min-h-[380px] flex flex-col justify-center;
+	}
+
+	.step {
+		@apply flex flex-1 flex-col justify-center;
+	}
+
+	.hidden {
+		@apply hidden;
+	}
+
+	.error-text {
+		@apply text-red-600 text-sm mt-2;
+	}
+
+	.button:disabled {
+		@apply opacity-50 cursor-not-allowed;
+	}
+
+	.loading-text {
+		@apply text-sm text-rbd-primary mt-2;
+	}
+</style>
+
+<div id="form5-hero-form-container" class="bg-[#FAFBFE] rounded-lg py-6 md:py-14 px-4 md:px-8">
+  <div class="form-container">
+    <!-- Step 1 -->
+    <div id="form5-step1" class="step">
+      <HeroCTATextVersion5 />
+      <div class="mt-8 flex justify-center">
+        <button
+          id="form5-start-btn"
+          class="button max-w-md w-full !text-2xl grid grid-cols-[auto_1fr_auto] items-center gap-2"
+        >
+              <svg class="size-8 animate-wiggle" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="justify-self-center">Start</span>
+              <span class="block w-8 h-8" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="form5-step3" class="step hidden">
+      <h2 class="h2 form-header">Kwota Twoich zadłużeń:</h2>
+      <form id="form5-step3-form" novalidate>
+        <div class="space-y-[12px]">
+          <label class="flex rounded-[12px] p-[12px] bg-white items-center">
+            <input type="radio" name="debt_amount" value="do 30 tys. PLN" required class="w-5 h-5 text-rbd-primary focus:ring-rbd-primary border-gray-300" />
+            <span class="ml-3 text-rbd-black font-semibold text-[14px] md:text-base">do 30 tys. PLN</span>
+          </label>
+          <label class="flex rounded-[12px] p-[12px] bg-white items-center">
+            <input type="radio" name="debt_amount" value="30-100 tys. PLN" class="w-5 h-5 text-rbd-primary focus:ring-rbd-primary border-gray-300" />
+            <span class="ml-3 text-rbd-black font-semibold text-[14px] md:text-base">30-100 tys. PLN</span>
+          </label>
+          <label class="flex rounded-[12px] p-[12px] bg-white items-center">
+            <input type="radio" name="debt_amount" value="80-150 tys. PLN" class="w-5 h-5 text-rbd-primary focus:ring-rbd-primary border-gray-300" />
+            <span class="ml-3 text-rbd-black font-semibold text-[14px] md:text-base">80-150 tys. PLN</span>
+          </label>
+          <label class="flex rounded-[12px] p-[12px] bg-white items-center">
+            <input type="radio" name="debt_amount" value="150-300 tys. PLN" class="w-5 h-5 text-rbd-primary focus:ring-rbd-primary border-gray-300" />
+            <span class="ml-3 text-rbd-black font-semibold text-[14px] md:text-base">150-300 tys. PLN</span>
+          </label>
+          <label class="flex rounded-[12px] p-[12px] bg-white items-center">
+            <input type="radio" name="debt_amount" value="powyżej 300 tys. PLN" class="w-5 h-5 text-rbd-primary focus:ring-rbd-primary border-gray-300" />
+            <span class="ml-3 text-rbd-black font-semibold text-[14px] md:text-base">powyżej 300 tys. PLN</span>
+          </label>
+        </div>
+        <div class="flex justify-between gap-6 mt-8">
+          <!-- <button type="button" id="form5-step3-prev" class="button-outline text-rbd-primary font-semibold inline-flex items-center">
+            <svg class="mr-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+            Wróć
+          </button> -->
+          <button type="button" id="form5-step3-next" class="button w-full">Kontynuuj</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Step 4 -->
+    <div id="form5-step4" class="step hidden">
+      <h2 class="h2 form-header">Twoje dane kontaktowe</h2>
+      <form id="form5-contact-form" class="space-y-[12px]" novalidate>
+        <FormInput type="text" name="name" placeholder="Imię*" required class="bg-white" />
+        <div class="relative w-full">
+          <FormInput type="tel" name="phone" placeholder="Telefon*" required class="bg-white"
+            pattern="^(\+[0-9]{1,4})?[0-9]{8,10}$" title="Wprowadź poprawny numer telefonu" autocomplete="tel" />
+          <div id="form5-phone-error" class="error-text hidden text-red-500 text-xs mt-1 ml-4">Wprowadź poprawny numer telefonu</div>
+        </div>
+        <FormInput type="email" name="email" placeholder="E-mail*" required class="bg-white" />
+        <p class="text-[10px] md:text-[12px] text-rbd-secondary opacity-90">Wyrażam zgodę na kontakt e-mailowy i telefoniczny.</p>
+        <div class="flex justify-between gap-6 mt-8">
+          <button type="button" id="form5-step4-prev" class="button-outline text-rbd-primary font-semibold inline-flex items-center">
+            <svg class="mr-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+            Wróć
+          </button>
+          <button type="submit" id="form5-submit-button" class="button w-full">Wyślij formularz</button>
+          <p id="form5-loading-text" class="loading-text hidden">Wysyłanie formularza...</p>
+        </div>
+      </form>
+    </div>
+
+    <div id="form5-step5" class="step text-center hidden">
+      <h2 class="h2 form-header">Dziękujemy za wypełnienie formularza.</h2>
+      <p class="text-rbd-secondary">Analizujemy twoje zgłoszenie...</p>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const steps = [
+      document.getElementById("form5-step1"),
+      document.getElementById("form5-step3"),
+      document.getElementById("form5-step4"),
+      document.getElementById("form5-step5"), 
+    ];
+
+    const formContainer =
+      document.getElementById("form5-hero-form-container") ||
+      document.getElementById("hero-section") ||
+      document.body;
+
+    let current = 0;
+
+    function showStep(i) {
+      steps.forEach((s, idx) => s.classList.toggle("hidden", idx !== i));
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      if (isMobile && i > 0) {
+        setTimeout(() => {
+          const header = document.querySelector("header");
+          const headerHeight = header ? header.offsetHeight : 0;
+          const containerPosition = formContainer.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({ top: containerPosition - headerHeight, behavior: "smooth" });
+        }, 50);
+      }
+    }
+    showStep(current);
+
+    function resetForm() {
+      current = 0;
+      showStep(current);
+      document.querySelectorAll('#form5-step3-form input[type="radio"]').forEach((i) => (i.checked = false));
+      document.querySelectorAll("#form5-contact-form input").forEach((i) => (i.value = ""));
+    }
+
+    const headerText = document.getElementById("form5-header-text");
+    if (headerText) headerText.addEventListener("click", () => { current = 1; showStep(current); });
+
+    document.getElementById("form5-start-btn").addEventListener("click", () => { current = 1; showStep(current); });
+
+    // Step 3 prev/next
+    // document.getElementById("form5-step3-prev").addEventListener("click", () => { current = 0; showStep(current); });
+    document.getElementById("form5-step3-next").addEventListener("click", () => {
+      if (!document.getElementById("form5-step3-form").reportValidity()) return;
+      current = 2; showStep(current);
+    });
+
+    // Step 4 prev
+    document.getElementById("form5-step4-prev").addEventListener("click", () => { current = 1; showStep(current); });
+
+    // Utilities
+    function collectFormData() {
+      const contactForm = document.getElementById("form5-contact-form");
+      const nameI = contactForm.querySelector('input[name="name"]');
+      const emailI = contactForm.querySelector('input[name="email"]');
+      const phoneI = contactForm.querySelector('input[name="phone"]');
+
+      const name = nameI.value.trim().split(" ").filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+      nameI.value = name;
+      emailI.value = emailI.value.trim();
+      phoneI.value = phoneI.value.trim();
+
+      const data = { name, email: emailI.value, phone: phoneI.value, problems: [] };
+      const debt = document.querySelector('input[name="debt_amount"]:checked');
+      if (debt) data.debt_amount = debt.value;
+      return data;
+    }
+
+    function mapFormDataToLead(formData) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const props = [{ name: "form_version", value: "rbd_com_header", type: "string" }];
+
+      ["utm_source", "utm_medium", "utm_campaign"].forEach((k) => {
+        const v = urlParams.get(k);
+        if (v) props.push({ name: k, value: v, type: "string" });
+      });
+
+      const mapTag = {
+        "do 30 tys. PLN": "Ma mniej niż 30k długu",
+        "30-100 tys. PLN": "Ma 30-80k długu",
+        "80-150 tys. PLN": "Ma 80-150k długu",
+        "150-300 tys. PLN": "Ma 150-300k długu",
+        "powyżej 300 tys. PLN": "Ma powyżej 300k długu",
+      };
+
+      const tags = formData.debt_amount ? [mapTag[formData.debt_amount]] : [];
+
+      return {
+        id: Math.floor(Date.now() / 1000),
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        note: null,
+        address: null,
+        city: null,
+        state: null,
+        zip: null,
+        country: null,
+        companyName: null,
+        createdOn: Math.floor(Date.now() / 1000),
+        properties: props,
+        tags,
+        subscribed: true,
+        subscriberLists: [0, 236802010],
+      };
+    }
+
+    document.getElementById("form5-contact-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const submitButton = document.getElementById("form5-submit-button");
+      const loadingText = document.getElementById("form5-loading-text");
+
+      // Walidacja telefonu
+      const phoneInput = form.querySelector('input[name="phone"]');
+      const phoneError = document.getElementById("form5-phone-error");
+      const phoneRegex = /^(\+[0-9]{1,4})?[0-9]{8,10}$/;
+      if (phoneInput && !phoneRegex.test(phoneInput.value)) {
+        phoneError.classList.remove("hidden");
+        return;
+      } else if (phoneInput && phoneError) {
+        phoneError.classList.add("hidden");
+      }
+      if (!form.reportValidity()) return;
+
+      submitButton.disabled = true;
+      loadingText.classList.remove("hidden");
+
+      const formData = collectFormData();
+      const lead = mapFormDataToLead(formData);
+      current = 3; // index Step 5 w tablicy steps
+      showStep(current);
+      
+      try {
+        const res = await fetch("https://api.rodzinabezdlugow.pl/contact/leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(lead),
+        });
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+
+        loadingText.classList.add("hidden");
+
+        setTimeout(() => window.open("/thank-you", "_self"), 2000);
+
+      } catch (err) {
+        console.error("Lead submission failed:", err);
+        submitButton.disabled = false;
+        loadingText.classList.add("hidden");
+      }
+    });
+  });
+</script>

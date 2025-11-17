@@ -1,0 +1,54 @@
+@theme {
+    --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif, 
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    --color-rbd-primary: #0C2E70;
+    --color-rbd-secondary: #0C2E70;
+    --color-rbd-bright: #CCD5E6;
+    --color-rbd-black: #2B2B32;
+    --color-rbd-red: #DA1E35;
+    --color-rbd-gray-light: #F7F9FA;
+    --container-max-width: 80rem;
+    --button-radius: 33px;
+    --animate-wiggle: wiggle 1s linear infinite;
+    --wiggle-amp: 6px;
+     
+    @keyframes wiggle {
+        0%   { transform: translateX(calc(-1 * var(--wiggle-amp))); }
+        33%  { transform: translateX(0); }
+        66%  { transform: translateX(var(--wiggle-amp)); }
+        100% { transform: translateX(calc(-1 * var(--wiggle-amp))); }
+    }
+
+}
+
+@utility container {
+    margin-inline: auto;
+    padding-inline: 1rem;
+    max-width: var(--container-max-width);
+}
+
+html {
+    @apply scroll-smooth;
+}
+
+.button {
+    @apply inline-flex items-center justify-center bg-rbd-red text-white py-[12px] px-[20px] md:py-[14px] md:px-[32px] rounded-[var(--button-radius)] font-semibold text-[14px] md:text-[16px] text-nowrap;
+    @apply hover:bg-[#c01a2f] hover:shadow-lg transition-all duration-300 cursor-pointer;
+}
+
+.button:disabled {
+    @apply opacity-50 cursor-not-allowed;
+}
+
+.h1 {
+    @apply text-5xl font-semibold mb-10;
+}
+
+.h2 {
+    @apply text-3xl md:text-4xl font-semibold mb-10;
+}
+
+.section {
+    @apply py-8 md:py-16;
+}

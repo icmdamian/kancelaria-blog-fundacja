@@ -1,0 +1,93 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  twitterCard?: "summary" | "summary_large_image";
+  noindex?: boolean;
+}
+
+const {
+  title = "Rodzina bez Długów - Zredukujemy Twoje Zadłużenie i Zbudujemy Finansową Wolność",
+  description = "Odwiedź stronę Rodzina Bez Długów i poznaj skuteczne metody na pozbycie się zadłużenia. Wsparcie dla rodzin w trudnej sytuacji finansowej. Odbuduj swoją przyszłość z nami już teraz!",
+  canonicalUrl = "https://rodzinabezdlugow.com",
+  ogImage = "/images/og-image.jpg",
+  ogType = "website",
+  twitterCard = "summary_large_image",
+  noindex = false,
+} = Astro.props;
+
+const siteName = "Rodzina Bez Długów";
+---
+
+<!-- Basic Meta Tags -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(ogImage, Astro.url)} />
+<meta property="og:site_name" content={siteName} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content={twitterCard} />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(ogImage, Astro.url)} />
+
+<!-- Resource Hints for better performance -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Preload critical resources -->
+<link rel="preload" href="/testimonial-section.png" as="image" media="(min-width: 768px)">
+
+<!-- Critical CSS inlined -->
+<style>
+  /* Critical above-the-fold styles to improve LCP */
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+  }
+  .hero-header {
+    font-size: 46px;
+    font-weight: 600;
+    line-height: 50px;
+    color: white;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 767px) {
+    .hero-header {
+      font-size: 32px;
+      line-height: 36px;
+    }
+  }
+</style>
+
+<!-- Google Fonts with font-display swap for better CLS - loaded async for non-critical -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="./assets/favicon/site.webmanifest">
+<meta name="theme-color" content="#0C2E70" />
+
+<!-- Additional head content -->
+<slot />

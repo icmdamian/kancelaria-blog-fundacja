@@ -1,0 +1,231 @@
+---
+import Card from "./Card.astro";
+import 'swiper/css';
+import 'swiper/css/pagination';
+---
+
+<section class="section bg-rbd-gray-light">
+  <div class="container max-w-[65rem]">
+    <h2 class="h2 text-center text-rbd-primary text-2xl md:text-4xl font-bold mb-12">
+      Dlaczego właśnie <span class="text-rbd-red">Rodzina Bez Długów?</span>
+    </h2>
+
+    <div class="hidden sm:grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <Card>
+        <div class="benefit-icon">
+          <img src="/assets/icons/benefit-1.svg" alt="Gwarancja skuteczności" />
+        </div>
+        <h3 class="benefit-title">Gwarancja skuteczności</h3>
+        <p class="benefit-description">Gwarantujemy skuteczność oddłużenia na umowie</p>
+      </Card>
+
+      <Card>
+        <div class="benefit-icon">
+          <img src="/assets/icons/benefit-2.svg" alt="Natychmiastowa ulga" />
+        </div>
+        <h3 class="benefit-title">Natychmiastowa ulga</h3>
+        <p class="benefit-description">Zaczynamy Proces Oddłużenia "od ręki" po Podpisaniu Umowy</p>
+      </Card>
+
+      <Card>
+        <div class="benefit-icon">
+          <img src="/assets/icons/benefit-3.svg" alt="Transparentne koszty" />
+        </div>
+        <h3 class="benefit-title">Transparentne koszty</h3>
+        <p class="benefit-description">Określamy z klientem warunki współpracy i szczegółowe raty</p>
+      </Card>
+
+      <Card>
+        <div class="benefit-icon">
+          <img src="/assets/icons/benefit-4.svg" alt="Indywidualny plan oddłużenia" />
+        </div>
+        <h3 class="benefit-title">Indywidualny plan oddłużenia</h3>
+        <p class="benefit-description">Plan oddłużenia dopasowany do Ciebie we współpracy z Ekspertem.</p>
+      </Card>
+
+      <Card>
+        <div class="benefit-icon">
+          <img src="/assets/icons/benefit-5.svg" alt="Działamy kompleksowo" />
+        </div>
+        <h3 class="benefit-title">Działamy kompleksowo</h3>
+        <p class="benefit-description">Od analizy zadłużenia do skutecznego oddłużenia – jesteśmy z Tobą do końca.</p>
+      </Card>
+
+      <Card>
+        <div class="benefit-icon">
+          <img src="/assets/icons/benefit-6.svg" alt="Wsparcie Kancelarii" />
+        </div>
+        <h3 class="benefit-title">
+          Wsparcie
+          <br>
+          Kancelarii</h3>
+        <p class="benefit-description">Wsparcie online – 2 razy w tygodniu omawiamy postępy Twojej sprawy.</p>
+      </Card>
+    </div>
+    
+    <div class="block sm:hidden">
+      <div class="swiper benefits-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="slide-content">
+                <Card>
+                  <div class="flex flex-row gap-x-[24px] gap-y-[20px] md:flex-col items-center md:items-start h-full">
+                    <div class="benefit-icon">
+                      <img width="70" height="74" src="/assets/icons/benefit-1.svg" alt="Gwarancja skuteczności" />
+                    </div>
+                    <div class="benefit-content">
+                      <h3 class="benefit-title">Gwarancja skuteczności</h3>
+                      <p class="benefit-description">Gwarantujemy skuteczność oddłużenia na umowie</p>
+                    </div>
+                </div>
+              </Card>
+              
+              <Card>
+                <div class="flex flex-row gap-x-[24px] gap-y-[20px] md:flex-col items-center md:items-start h-full">
+                  <div class="benefit-icon">
+                    <img width="70" height="74" src="/assets/icons/benefit-2.svg" alt="Natychmiastowa ulga" />
+                  </div>
+                  <div class="benefit-content">
+                    <h3 class="benefit-title">Natychmiastowa ulga</h3>
+                    <p class="benefit-description">Zaczynamy Proces Oddłużenia "od ręki" po Podpisaniu Umowy</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="slide-content">
+              <Card>
+                <div class="flex flex-row gap-x-[24px] gap-y-[20px] md:flex-col items-center md:items-start h-full">
+                  <div class="benefit-icon">
+                    <img width="70" height="74" src="/assets/icons/benefit-3.svg" alt="Transparentne koszty" />
+                  </div>
+                  <div class="benefit-content">
+                    <h3 class="benefit-title">Transparentne koszty</h3>
+                    <p class="benefit-description">Określamy z klientem warunki współpracy i szczegółowe raty</p>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card>
+                <div class="flex flex-row gap-x-[24px] gap-y-[20px] md:flex-col items-center md:items-start h-full">
+                  <div class="benefit-icon">
+                    <img width="70" height="74" src="/assets/icons/benefit-4.svg" alt="Wsparcie Kancelarii" />
+                  </div>
+                  <div class="benefit-content">
+                    <h3 class="benefit-title">Wsparcie Kancelarii</h3>
+                    <p class="benefit-description">Wsparcie online – z nami w sytuacji prawniczej poradzimy Twojej sprawy</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+          
+          <div class="swiper-slide">
+            <div class="slide-content">
+              <Card>
+                <div class="flex flex-row gap-x-[24px] gap-y-[20px] md:flex-col items-center md:items-start h-full">
+                  <div class="benefit-icon">
+                    <img width="70" height="74" src="/assets/icons/benefit-5.svg" alt="Indywidualny plan oddłużenia" />
+                  </div>
+                  <div class="benefit-content">
+                    <h3 class="benefit-title">Indywidualny plan oddłużenia</h3>
+                    <p class="benefit-description">Plan oddłużenia dopasowany do Ciebie we współpracy z ekspertem</p>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card>
+                <div class="flex flex-row gap-x-[24px] gap-y-[20px] md:flex-col items-center md:items-start h-full">
+                  <div class="benefit-icon">
+                    <img width="70" height="74" src="/assets/icons/benefit-6.svg" alt="Wsparcie Kancelarii" />
+                  </div>
+                  <div class="benefit-content">
+                    <h3 class="benefit-title">Wsparcie Kancelarii</h3>
+                    <p class="benefit-description">Wsparcie online – z nami w sytuacji prawniczej poradzimy Twojej sprawy</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
+        
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import Swiper from 'swiper';
+  import { Pagination, A11y } from 'swiper/modules';
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      Swiper.use([Pagination, A11y]);
+      
+      const benefitsSwiper = new Swiper('.benefits-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        speed: 400,
+        autoHeight: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      });
+      console.log('Swiper initialized successfully!');
+    } catch (err) {
+      console.error('Error initializing Swiper:', err);
+    }
+  });
+</script>
+
+<style>
+  @reference "../styles/global.css";
+  
+  .swiper {
+    @apply w-full pb-12;
+  }
+  
+  .slide-content {
+    @apply flex flex-col gap-5;
+  }
+  
+  .benefit-icon {
+    @apply flex-shrink-0 mr-4 my-auto flex items-center justify-center;
+    @apply w-[70px] h-[74px];
+  }
+  
+  .benefit-icon img {
+    @apply w-full h-full object-contain;
+  }
+  
+  .benefit-content {
+    @apply flex-1;
+  }
+  
+  .benefit-title {
+    @apply font-bold text-rbd-primary text-[20px] md:text-[24px] mb-1;
+  }
+  
+  .benefit-description {
+    @apply text-[14px] md:text-base text-gray-600 leading-tight;
+  }
+  
+  :global(.swiper-pagination) {
+    @apply bottom-0;
+  }
+  
+  :global(.swiper-pagination-bullet) {
+    @apply inline-block mx-1 rounded-full opacity-100;
+    width: 10px;
+    height: 10px;
+    background-color: #CCD5E6;
+  }
+  
+  :global(.swiper-pagination-bullet-active) {
+    background-color: #0C2E70;
+  }
+</style>

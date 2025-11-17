@@ -1,0 +1,41 @@
+---
+interface Props {
+  type: string;
+  name: string;
+  placeholder: string;
+  required?: boolean;
+  class?: string;
+  value?: string;
+  pattern?: string;
+  maxlength?: string;
+  autocomplete?: string;
+  title?: string;
+  id?: string;
+}
+
+const {
+  type,
+  name,
+  placeholder,
+  required,
+  class: className = "",
+  value,
+  autocomplete,
+  ...rest
+} = Astro.props;
+
+const baseClass =
+  "w-full text-[14px] md:text-base px-4 py-3 border border-gray-300 rounded-[40px] focus:outline-none focus:ring-2 focus:ring-primary";
+const combinedClass = `${baseClass} ${className}`;
+---
+
+<input
+  type={type}
+  name={name}
+  placeholder={placeholder}
+  class={combinedClass}
+  {...required ? { required: true } : {}}
+  {...value !== undefined ? { value } : {}}
+  {...autocomplete ? { autocomplete } : {}}
+  {...rest}
+/>

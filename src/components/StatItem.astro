@@ -1,0 +1,39 @@
+---
+export interface Props {
+	value: string;
+	description: string;
+}
+
+const { value, description } = Astro.props;
+---
+
+<style>
+  .stat-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 13px;
+    height: 114px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='114' viewBox='0 0 13 114' fill='none'%3E%3Cpath d='M2 112L0 3L7 0L12.5 114L2 112Z' fill='%23DA1E35'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+  }
+</style>
+
+<div class="stat-item relative flex items-start pl-14">
+  <div class="flex flex-col gap-y-4">
+    <p class="text-rbd-secondary font-bold text-3xl md:text-4xl">
+      {value}
+    </p>
+
+    <p class="text-rbd-black text-[14px] md:text-base leading-snug">
+      {description.split("<br>").map((line, i, arr) => (
+        <>
+          {line}
+          {i < arr.length - 1 && <br />}
+        </>
+      ))}
+    </p>
+  </div>
+</div>

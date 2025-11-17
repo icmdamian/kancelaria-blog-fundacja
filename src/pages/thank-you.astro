@@ -1,0 +1,22 @@
+---
+import "../styles/global.css";
+import Layout from "../Layout.astro";
+import SuccessVideo from "../components/SuccessVideo.astro";
+import MediaMentions from "../components/MediaMentions.astro";
+import ThankYouTracking from "../components/ThankYouTracking.astro";
+---
+
+<Layout>
+	<ThankYouTracking />
+	<div class="bg-rbd-primary flex items-center">
+		<div class="container mx-auto px-4 py-6 md:py-12">
+			<div class="mb-6 bg-[#FAFBFE] text-rbd-red rounded-lg text-center font-semibold text-[20px] p-2">
+				Dziękujemy za wypełnienie formularza.
+			</div>
+			<SuccessVideo />
+		</div>
+	</div>
+	<div class="bg-rbd-gray-light">
+		<MediaMentions />
+	</div>
+</Layout>

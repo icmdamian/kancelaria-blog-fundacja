@@ -1,0 +1,43 @@
+---
+import HeroFormVersion4 from "./HeroFormVersion4.astro";
+---
+<section class="section bg-rbd-secondary relative" id="hero-section">
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center" id="hero-standard-layout">
+      <div class="relative" id="hero-left-content">
+        <div class="absolute hidden md:block top-[-8rem] left-[-4rem]">
+          <svg width="516" height="544" viewBox="0 0 516 544" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M239.043 95.6814V119.505H489.579V166.289H516.002V95.6814H239.043Z" fill="#DA1E35"/>
+            <path d="M489.576 509.82L35.9876 415.942L23.3519 117.092L268.558 21.2543L246.437 0.474854L0 98.4936L5.27336 437.596L5.31853 437.585V437.596L515.852 543.574L515.999 442.024H489.576V509.82Z" fill="#DA1E35"/>
+          </svg>
+        </div>
+        <h1 class="h1 hero-header hidden md:inline">
+          Skuteczne 
+          <br />
+          oddłużanie nawet 
+          <br />
+          w 48h
+        </h1>
+        <p class="md:hidden text-[14px] text-white text-center mb-8">
+          Pomogliśmy już 3 000+ osobom umorzyć nawet 100 % długów i zatrzymać windykację.
+        </p>
+        <p class="hidden md:block text-left text-base max-w-md text-white">
+          Pomogliśmy już 
+          <span class="text-[24px]">3 000+</span> 
+          osobom umorzyć 
+          nawet 100% długów i zatrzymać windykację 
+          — Twoja historia może być następna.
+        </p>
+      </div>
+      <HeroFormVersion4 />
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "../styles/global.css";
+
+  .hero-header {
+    @apply text-white text-[46px] font-semibold leading-[50px] mb-8;
+  }
+</style>
