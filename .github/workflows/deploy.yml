@@ -33,10 +33,22 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Set environment variables based on branch
+        run: |
+          if [[ "${{ github.ref_name }}" == "master" ]]; then
+            echo "STRAPI_URL=${{ secrets.PROD_STRAPI_URL }}" >> $GITHUB_ENV
+            echo "STRAPI_TOKEN=${{ secrets.PROD_STRAPI_TOKEN }}" >> $GITHUB_ENV
+            echo "Using production Strapi: ${{ secrets.PROD_STRAPI_URL }}"
+          else
+            echo "STRAPI_URL=${{ secrets.DEV_STRAPI_URL }}" >> $GITHUB_ENV
+            echo "STRAPI_TOKEN=${{ secrets.DEV_STRAPI_TOKEN }}" >> $GITHUB_ENV
+            echo "Using development Strapi: ${{ secrets.DEV_STRAPI_URL }}"
+          fi
+
       - name: Build Astro site
         env:
-          STRAPI_API_URL: ${{ secrets.STRAPI_API_URL }}
-          STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
+          STRAPI_URL: ${{ env.STRAPI_URL }}
+          STRAPI_TOKEN: ${{ env.STRAPI_TOKEN }}
         run: pnpm build
 
       # Install Wrangler CLI for Cloudflare Pages deployment
@@ -59,11 +71,11 @@ jobs:
             BRANCH="preview"
             echo "Using development project: $PROJECT_NAME"
           fi
-          
+
           # Skip project existence check and creation - just try to deploy
           # If project doesn't exist, the deploy command will fail with a clear error
           # If project exists, it will deploy correctly
-          
+
           # Deploy to Cloudflare Pages
           echo "Deploying to $BRANCH environment for project $PROJECT_NAME"
           wrangler pages deploy "./dist" --project-name="$PROJECT_NAME" --branch="$BRANCH"
