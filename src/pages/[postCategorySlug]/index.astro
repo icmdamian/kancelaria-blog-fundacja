@@ -1,0 +1,16 @@
+---
+import { StrapiPostEndpoints } from '../../lib/strapi';
+import ArticleListing from '../../components/blog/ArticleListing.astro';
+
+export const prerender = false;
+
+const { postCategorySlug } = Astro.params;
+
+if (!postCategorySlug) {
+  return Astro.redirect('/404');
+}
+
+const response = await StrapiPostEndpoints.getCategoryPosts(postCategorySlug, 1);
+---
+
+<ArticleListing postsResponse={response} />

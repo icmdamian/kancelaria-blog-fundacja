@@ -1,0 +1,46 @@
+---
+interface Props {
+  prefix: string;
+  currentPage: number;
+  pageCount: number;
+}
+
+const { prefix, currentPage, pageCount } = Astro.props;
+
+if (pageCount < 2) {
+  return null;
+}
+
+const isFirstPage = currentPage === 1;
+const isLastPage = currentPage === pageCount;
+---
+
+<div>
+  <div class="flex justify-center items-center space-x-2 py-8">
+    {
+      !isFirstPage && (
+        <a
+          href={currentPage > 2 ? `${prefix}/page/${currentPage - 1}` : prefix}
+          class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
+        >
+          &larr; Poprzednia
+        </a>
+      )
+    }
+
+    <span class="px-4 py-2">
+      Strona {currentPage} z {pageCount}
+    </span>
+
+    {
+      !isLastPage && (
+        <a
+          href={`${prefix}/page/${currentPage + 1}`}
+          class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
+        >
+          Następna &rarr;
+        </a>
+      )
+    }
+  </div>
+</div>

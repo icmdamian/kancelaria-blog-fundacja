@@ -1,0 +1,29 @@
+---
+import { StrapiPostEndpoints } from '../../../lib/strapi';
+import ArticleListing from '../../../components/blog/ArticleListing.astro';
+
+export const prerender = false;
+
+const { postCategorySlug, page } = Astro.params;
+
+if (!postCategorySlug || !page) {
+  return Astro.redirect('/404');
+}
+
+const pageAsNumber = parseInt(page);
+
+if (isNaN(pageAsNumber)) {
+  return Astro.redirect('/404');
+}
+
+const response = await StrapiPostEndpoints.getCategoryPosts(
+  postCategorySlug,
+  pageAsNumber
+);
+
+if (!response.data.length) {
+  return Astro.redirect(`/${Astro.params.postCategorySlug}`, 302);
+}
+---
+
+<ArticleListing postsResponse={response} />

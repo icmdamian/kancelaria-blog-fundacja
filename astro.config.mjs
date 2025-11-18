@@ -1,4 +1,5 @@
 // @ts-check
+import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import sentry from "@sentry/astro";
 import tailwindcss from "@tailwindcss/vite";
@@ -35,9 +36,11 @@ export default defineConfig({
   },
 
   compressHTML: true,
+  output: "server",
 
   integrations: [
     sentry({
+      enabled: process.env.NODE_ENV === 'production',
       sourceMapsUploadOptions: {
         project: "javascript-astro",
         authToken: process.env.SENTRY_AUTH_TOKEN,
@@ -46,4 +49,6 @@ export default defineConfig({
     removeHtmlComments(),
     react(),
   ],
+
+  adapter: cloudflare(),
 });

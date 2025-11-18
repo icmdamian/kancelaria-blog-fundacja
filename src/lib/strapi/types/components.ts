@@ -1,10 +1,11 @@
-import type { BlocksContent } from ".";
+import { BlocksContent } from './blocks-content';
+import { Image } from './image';
 
 export interface ContentBlockComponent {
   title?: string;
   content?: BlocksContent;
   isVisible: boolean;
-  pictureUrl?: string;
+  picture?: Image;
 }
 
 export interface FaqComponent {

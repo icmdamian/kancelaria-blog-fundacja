@@ -1,0 +1,51 @@
+---
+import Layout from '../../Layout.astro';
+import BlogPostCard from '../../components/blog/BlogPostCard.astro';
+import Container from '../../components/common/Container.astro';
+import { type PostsResponse } from '../../lib/strapi';
+import Pagination from '../common/Pagination.astro';
+
+interface Props {
+  postsResponse: PostsResponse;
+}
+
+const posts = Astro.props.postsResponse.data;
+const pagination = Astro.props.postsResponse.meta.pagination;
+
+const categorName = posts[0].category.name;
+const title = `${categorName} - Rodzina Bez Długów`;
+const description = `${categorName} - Najnowsze artykuły i porady.`;
+---
+
+<Layout title={title} description={description}>
+  <div>
+    <div class="bg-rbd-primary px-4">
+      <Container>
+        <h1 class="text-white lg:text-3xl py-4 lg:py-8 font-medium">{categorName}</h1>
+      </Container>
+    </div>
+    <div class="lg:px-4">
+      <div class="max-w-7xl mx-auto">
+        {
+          posts.length === 0 ? (
+            <div>
+              <p class="text-center p-4">Brak dostępnych wpisów. Zapraszamy wkrótce!</p>
+            </div>
+          ) : (
+            <div>
+              <ul class="lg:divide-y divide-gray-200">
+                {posts &&
+                  posts.map((post: any) => (
+                    <li class="lg:py-8">
+                      <BlogPostCard post={post} />
+                    </li>
+                  ))}
+              </ul>
+              <Pagination prefix={`/${posts[0].category.slug}`} currentPage={pagination.page} pageCount={pagination.pageCount} />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</Layout>

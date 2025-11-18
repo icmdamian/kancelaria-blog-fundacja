@@ -1,0 +1,30 @@
+---
+import { getImageUrl } from '../../../lib/helpers/image';
+import { extractPlainText } from '../../../lib/helpers/text-extractor';
+import type { PostEntity } from '../../../lib/strapi';
+
+interface Props {
+  post: PostEntity;
+}
+
+const { post } = Astro.props;
+
+const { title, introduction, picture } = post;
+---
+
+<div class="space-y-2">
+  {
+    picture && (
+      <img
+        src={getImageUrl(picture)}
+        alt={picture.alternativeText}
+        loading="lazy"
+        class="rounded-lg aspect-video object-cover w-full"
+      />
+    )
+  }
+  <h3 class="text-xl text-rbd-primary font-semibold">
+    <a href={`/${post.category.slug}/${post.slug}`}>{title}</a>
+  </h3>
+  <p class="text-slate-600">{extractPlainText(introduction, 100)}</p>
+</div>
