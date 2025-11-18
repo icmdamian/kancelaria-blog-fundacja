@@ -1,6 +1,8 @@
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import { type FC } from "react";
-import type { BlocksContent } from "../../lib/strapi";
+import { BlocksRenderer } from '@strapi/blocks-react-renderer';
+import { type FC } from 'react';
+import type { BlocksContent } from '../../lib/strapi';
+import { isCustomComponent } from '../../lib/custom-component/is-custom-component';
+import CustomComponent from '../blog/CustomComponent';
 
 interface BlockContentProps {
   content: BlocksContent;
@@ -14,47 +16,41 @@ const BlocksContentRenderer: FC<BlockContentProps> = ({ content }) => {
         heading: ({ children, level }) => {
           switch (level) {
             case 1:
-              return (
-                <h1 className="text-3xl text-rbd-primary font-bold mt-6 mb-4">{children}</h1>
-              );
+              return <h1 className="text-3xl text-rbd-primary font-bold mt-6 mb-4">{children}</h1>;
             case 2:
-              return (
-                <h2 className="text-2xl text-rbd-primary font-bold mt-5 mb-3">{children}</h2>
-              );
+              return <h2 className="text-2xl text-rbd-primary font-bold mt-5 mb-3">{children}</h2>;
             case 3:
-              return (
-                <h3 className="text-xl text-rbd-primary font-bold mt-4 mb-2">{children}</h3>
-              );
+              return <h3 className="text-xl text-rbd-primary font-bold mt-4 mb-2">{children}</h3>;
             case 4:
-              return (
-                <h4 className="text-lg text-rbd-primary font-bold mt-3 mb-2">{children}</h4>
-              );
+              return <h4 className="text-lg text-rbd-primary font-bold mt-3 mb-2">{children}</h4>;
             case 5:
-              return (
-                <h5 className="text-base text-rbd-primary font-bold mt-3 mb-1">{children}</h5>
-              );
+              return <h5 className="text-base text-rbd-primary font-bold mt-3 mb-1">{children}</h5>;
             case 6:
-              return (
-                <h6 className="text-sm text-rbd-primary font-bold mt-3 mb-1">{children}</h6>
-              );
+              return <h6 className="text-sm text-rbd-primary font-bold mt-3 mb-1">{children}</h6>;
             default:
-              return (
-                <h2 className="text-2xl text-rbd-primary font-bold mt-5 mb-3">{children}</h2>
-              );
+              return <h2 className="text-2xl text-rbd-primary font-bold mt-5 mb-3">{children}</h2>;
           }
         },
         paragraph: ({ children }) => {
+          const customComponent = isCustomComponent(children);
+          if (customComponent.isCustomComponent) {
+            return (
+              <CustomComponent
+                component={customComponent.data.component}
+                props={customComponent.data.props}
+              />
+            );
+          }
+
           return <p className="mb-4 leading-relaxed">{children}</p>;
         },
         list: ({ children, format }) => {
-          if (format === "ordered") {
-            return (
-              <ol className="list-decimal ml-6 mb-4 space-y-2">{children}</ol>
-            );
+          if (format === 'ordered') {
+            return <ol className="list-decimal ml-6 mb-4 space-y-2">{children}</ol>;
           }
           return <ul className="list-disc ml-6 mb-4 space-y-2">{children}</ul>;
         },
-        "list-item": ({ children }) => {
+        'list-item': ({ children }) => {
           return <li className="leading-normal">{children}</li>;
         },
         link: ({ children, url }) => {
@@ -74,7 +70,7 @@ const BlocksContentRenderer: FC<BlockContentProps> = ({ content }) => {
             <figure className="my-6">
               <img
                 src={image.url}
-                alt={image.alternativeText || "Blog post image"}
+                alt={image.alternativeText || 'Blog post image'}
                 className="max-w-full rounded-lg"
                 loading="lazy"
               />
@@ -90,7 +86,7 @@ const BlocksContentRenderer: FC<BlockContentProps> = ({ content }) => {
         },
         code: ({ children }) => {
           return (
-            <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto my-4">
+            <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto my-4 text-red-400">
               <code>{children}</code>
             </pre>
           );

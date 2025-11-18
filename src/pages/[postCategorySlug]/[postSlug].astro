@@ -1,43 +1,47 @@
 ---
 import ArticleAuthor from '../../components/blog/ArticleAuthor.astro';
 import BlogHeader from '../../components/blog/BlogHeader.astro';
+import PostGrid from '../../components/blog/grid/PostGrid.astro';
 import Button from '../../components/common/Button.astro';
 import FaqItem from '../../components/FaqItem.astro';
 import BlocksContentRenderer from '../../components/react/BlocksContentRenderer';
 import Layout from '../../Layout.astro';
+import { getImageUrl } from '../../lib/helpers/image';
+import { extractPlainText } from '../../lib/helpers/text-extractor';
 import { StrapiPostEndpoints } from '../../lib/strapi';
 
-export const getStaticPaths = async () => {
-  const posts = await StrapiPostEndpoints.getAllPosts();
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-  }));
-};
+export const prerender = false;
 
-const { slug } = Astro.params;
-if (!slug) {
-  return new Response('Slug is missing', { status: 500 });
+const { postSlug, postCategorySlug } = Astro.params;
+
+if (!postSlug || !postCategorySlug) {
+  return Astro.redirect('/404');
 }
 
-const post = await StrapiPostEndpoints.getPostBySlug(slug);
+const [post, categoryPosts] = await Promise.all([
+  StrapiPostEndpoints.getPostBySlug(postSlug),
+  StrapiPostEndpoints.getCategoryPosts(postCategorySlug, 1, 12),
+]);
+
 if (!post) {
-  return new Response('Post not found', { status: 404 });
+  return Astro.redirect('/404');
 }
 
-const { title, pictureUrl, introduction, content, faq } = post;
+const { title, introduction, content, faq, picture } = post;
 
 const pageTitle = `${title} - Blog - Rodzina bez długów`;
-const description = `${title} - Artykuł`;
+const description = extractPlainText(introduction, 160);
+const pictureUrl = picture ? getImageUrl(picture) : undefined;
 ---
 
 <Layout title={pageTitle} description={description} ogImage={pictureUrl} ogType="article">
   <div>
-    <BlogHeader title={title} imageUrl={pictureUrl} />
+    <BlogHeader title={title} />
     <div class="text-slate-800 lg:my-12">
       <div class="max-w-4xl mx-auto">
         <div class="p-4 space-y-12">
           <section>
-            <p>{introduction}</p>
+            <BlocksContentRenderer content={introduction} />
           </section>
           <section>
             <h2 class="h2 text-2xl text-rbd-primary font-bold mt-4 mb-2">Spis treści</h2>
@@ -61,10 +65,10 @@ const description = `${title} - Artykuł`;
                     </h2>
                   )}
                   {section.content && <BlocksContentRenderer content={section.content} />}
-                  {section.pictureUrl && (
+                  {section.picture && (
                     <img
-                      src={section.pictureUrl}
-                      alt={section.title}
+                      src={getImageUrl(section.picture)}
+                      alt={section.picture.alternativeText}
                       loading="lazy"
                       class="rounded-lg aspect-video object-cover"
                     />
@@ -100,8 +104,21 @@ const description = `${title} - Artykuł`;
           <div class="flex flex-wrap gap-4 items-center justify-between">
             <ArticleAuthor />
             <div>
-              <Button>Sprawdź bezpłatnie, czy możemy Ci pomóc</Button>
+              <a href="/#formularz">
+                <Button>Sprawdź bezpłatnie, czy możemy Ci pomóc</Button>
+              </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="p-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="h2 text-2xl text-rbd-primary font-bold mt-8 mb-6">
+            Artykuły z kategorii {post.category.name}
+          </h2>
+          <div class="max-w-4xl mx-auto">
+            <PostGrid posts={categoryPosts.data} />
           </div>
         </div>
       </section>

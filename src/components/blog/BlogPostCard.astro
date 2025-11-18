@@ -1,0 +1,43 @@
+---
+import { extractPlainText } from '../../lib/helpers/text-extractor';
+import type { PostEntity } from '../../lib/strapi';
+import ArticleAuthor from './ArticleAuthor.astro';
+import { getImageUrl } from '../../lib/helpers/image';
+
+interface Props {
+  post: PostEntity;
+}
+
+const { post } = Astro.props;
+const { title, slug, category, introduction, picture } = post;
+
+const imageUrl = picture
+  ? getImageUrl(picture)
+  : 'https://placehold.co/600x400?text=Rodzina%20bez%20d%C5%82ug%C3%B3w';
+---
+
+<div class="group flex flex-col lg:flex-row lg:gap-4 lg:items-center">
+  <div class="flex-1">
+    <div class="aspect-video overflow-hidden lg:rounded-lg">
+      <img
+        src={imageUrl}
+        alt={title}
+        loading="lazy"
+        class="flex-1 object-cover w-full h-full group-hover:scale-105 ease-in-out duration-300"
+      />
+    </div>
+  </div>
+  <div class="flex-1 p-4">
+    <a href={`/${category.slug}/${slug}`}>
+      <h2 class="text-2xl text-rbd-primary font-semibold hover:underline">{title}</h2>
+    </a>
+    <div class="mt-4">
+      <p class="text-slate-800">
+        {extractPlainText(introduction, 100)}
+      </p>
+    </div>
+    <div class="mt-6">
+      <ArticleAuthor />
+    </div>
+  </div>
+</div>
