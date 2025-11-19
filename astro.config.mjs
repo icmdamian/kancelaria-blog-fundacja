@@ -9,6 +9,48 @@ import removeHtmlComments from "./removeHtmlComments.mjs";
 // https://astro.build/config
 export default defineConfig({
   vite: {
+    ssr: {
+      external: [
+        "node:diagnostics_channel",
+        "diagnostics_channel",
+        "node:fs",
+        "fs",
+        "node:readline",
+        "readline",
+        "node:path",
+        "path",
+        "node:util",
+        "util",
+        "node:module",
+        "module",
+        "node:os",
+        "os",
+        "node:worker_threads",
+        "worker_threads",
+        "node:http",
+        "http",
+        "node:https",
+        "https",
+        "node:stream",
+        "stream",
+        "node:zlib",
+        "zlib",
+        "node:url",
+        "url",
+        "node:events",
+        "events",
+        "node:inspector",
+        "inspector",
+        "node:child_process",
+        "child_process",
+        "node:net",
+        "net",
+        "node:tls",
+        "tls",
+        "node:async_hooks",
+        "async_hooks",
+      ],
+    },
     plugins: [tailwindcss()],
     build: {
       minify: "terser",
@@ -41,6 +83,7 @@ export default defineConfig({
   integrations: [
     sentry({
       enabled: process.env.NODE_ENV === 'production',
+      telemetry: false,
       sourceMapsUploadOptions: {
         project: "javascript-astro",
         authToken: process.env.SENTRY_AUTH_TOKEN,

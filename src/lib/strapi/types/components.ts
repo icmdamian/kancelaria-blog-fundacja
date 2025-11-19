@@ -1,5 +1,5 @@
-import { BlocksContent } from './blocks-content';
-import { Image } from './image';
+import type { BlocksContent } from './blocks-content';
+import type { Image } from './image';
 
 export interface ContentBlockComponent {
   title?: string;

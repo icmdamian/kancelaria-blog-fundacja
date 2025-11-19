@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios';
-import { StrapiQueryParams } from './types';
+import type { StrapiQueryParams } from './types';
 
 class StrapiClient {
   private client: AxiosInstance;

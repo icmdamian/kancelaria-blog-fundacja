@@ -4,13 +4,13 @@ import ArticleListing from '../../../components/blog/ArticleListing.astro';
 
 export const prerender = false;
 
-const { postCategorySlug, page } = Astro.params;
+const { postCategorySlug, page: pageNumber } = Astro.params;
 
-if (!postCategorySlug || !page) {
+if (!postCategorySlug || !pageNumber) {
   return Astro.redirect('/404');
 }
 
-const pageAsNumber = parseInt(page);
+const pageAsNumber = parseInt(pageNumber);
 
 if (isNaN(pageAsNumber)) {
   return Astro.redirect('/404');

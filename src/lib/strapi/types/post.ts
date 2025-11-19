@@ -1,7 +1,7 @@
-import { BlocksContent } from './blocks-content';
-import { Domain, StrapiEntity, StrapiResponse } from './common';
-import { ContentBlockComponent, FaqComponent } from './components';
-import { Image } from './image';
+import type { BlocksContent } from './blocks-content';
+import type { Domain, StrapiEntity, StrapiResponse } from './common';
+import type { ContentBlockComponent, FaqComponent } from './components';
+import type { Image } from './image';
 
 export interface Category {
   name: string;
