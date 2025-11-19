@@ -16,7 +16,7 @@ const { title, introduction, picture } = post;
   {
     picture && (
       <img
-        src={getImageUrl(picture)}
+        src={getImageUrl(Astro.locals, picture)}
         alt={picture.alternativeText}
         loading="lazy"
         class="rounded-lg aspect-video object-cover w-full"

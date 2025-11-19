@@ -12,7 +12,7 @@ const { post } = Astro.props;
 const { title, slug, category, introduction, picture } = post;
 
 const imageUrl = picture
-  ? getImageUrl(picture)
+  ? getImageUrl(Astro.locals, picture)
   : 'https://placehold.co/600x400?text=Rodzina%20bez%20d%C5%82ug%C3%B3w';
 ---
 

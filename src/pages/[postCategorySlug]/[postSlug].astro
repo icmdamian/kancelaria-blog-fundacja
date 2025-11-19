@@ -31,7 +31,7 @@ const { title, introduction, content, faq, picture } = post;
 
 const pageTitle = `${title} - Blog - Rodzina bez długów`;
 const description = extractPlainText(introduction, 160);
-const pictureUrl = picture ? getImageUrl(picture) : undefined;
+const pictureUrl = picture ? getImageUrl(Astro.locals, picture) : undefined;
 ---
 
 <Layout title={pageTitle} description={description} ogImage={pictureUrl} ogType="article">
@@ -67,7 +67,7 @@ const pictureUrl = picture ? getImageUrl(picture) : undefined;
                   {section.content && <BlocksContentRenderer content={section.content} />}
                   {section.picture && (
                     <img
-                      src={getImageUrl(section.picture)}
+                      src={getImageUrl(Astro.locals, section.picture)}
                       alt={section.picture.alternativeText}
                       loading="lazy"
                       class="rounded-lg aspect-video object-cover"
