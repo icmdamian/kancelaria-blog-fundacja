@@ -10,7 +10,7 @@ if (!postCategorySlug) {
   return Astro.redirect('/404');
 }
 
-const response = await StrapiPostEndpoints.getCategoryPosts(postCategorySlug, 1);
+const response = await StrapiPostEndpoints.getCategoryPosts(Astro.locals, postCategorySlug, 1);
 ---
 
 <ArticleListing postsResponse={response} />

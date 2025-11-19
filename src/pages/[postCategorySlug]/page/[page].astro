@@ -17,6 +17,7 @@ if (isNaN(pageAsNumber)) {
 }
 
 const response = await StrapiPostEndpoints.getCategoryPosts(
+  Astro.locals,
   postCategorySlug,
   pageAsNumber
 );

@@ -27,9 +27,7 @@ class StrapiClient {
   }
 }
 
-export const createStrapiClient = (): StrapiClient => {
-  const apiUrl = import.meta.env.STRAPI_API_URL;
-  const apiToken = import.meta.env.STRAPI_API_TOKEN;
+export const createStrapiClient = (apiUrl: string, apiToken: string): StrapiClient => {
 
   if (!apiUrl || !apiToken) {
     throw new Error('Missing required environment variables STRAPI_API_URL or STRAPI_API_TOKEN');

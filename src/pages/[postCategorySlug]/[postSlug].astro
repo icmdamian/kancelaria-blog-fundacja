@@ -19,8 +19,8 @@ if (!postSlug || !postCategorySlug) {
 }
 
 const [post, categoryPosts] = await Promise.all([
-  StrapiPostEndpoints.getPostBySlug(postSlug),
-  StrapiPostEndpoints.getCategoryPosts(postCategorySlug, 1, 12),
+  StrapiPostEndpoints.getPostBySlug(Astro.locals, postSlug),
+  StrapiPostEndpoints.getCategoryPosts(Astro.locals, postCategorySlug, 1, 12),
 ]);
 
 if (!post) {

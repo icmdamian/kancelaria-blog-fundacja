@@ -5,21 +5,24 @@ import type { CategoryCount } from './types/category-count';
 import type { PostSlug } from './types/post-slug';
 
 export class StrapiPostEndpoints {
-  private static client = createStrapiClient();
-
-  public static async getCategoryPostCount(): Promise<CategoryCount[]> {
-    return this.client.get<CategoryCount[]>('/categories/post-count');
+  public static async getCategoryPostCount(locals: App.Locals): Promise<CategoryCount[]> {
+    const client = StrapiPostEndpoints.getStrapiClient(locals);
+    return client.get<CategoryCount[]>('/categories/post-count');
   }
 
-  public static async getAllPostSlugs(): Promise<PostSlug[]> {
-    return this.client.get<PostSlug[]>('/posts/slugs');
+  public static async getAllPostSlugs(locals: App.Locals): Promise<PostSlug[]> {
+    const client = StrapiPostEndpoints.getStrapiClient(locals);
+    return client.get<PostSlug[]>('/posts/slugs');
   }
 
   public static async getCategoryPosts(
+    locals: App.Locals,
     categorySlug: string,
     page: number,
     pageSize: number = defautPageSize,
   ): Promise<PostsResponse> {
+    const client = StrapiPostEndpoints.getStrapiClient(locals);
+
     const defaultParams: StrapiQueryParams = {
       sort: ['publishedAt:desc'],
       filters: {
@@ -35,22 +38,31 @@ export class StrapiPostEndpoints {
       },
     };
 
-    return this.client.get<PostsResponse>('posts', defaultParams);
+    return client.get<PostsResponse>('posts', defaultParams);
   }
 
-  public static async getPostBySlug(slug: string): Promise<PostEntity | null> {
+  public static async getPostBySlug(locals: App.Locals, slug: string): Promise<PostEntity | null> {
+    const client = StrapiPostEndpoints.getStrapiClient(locals);
+
     const params: StrapiQueryParams = {
       populate: ['content', 'faq', 'picture', 'content.picture', 'category'],
       filters: { slug, isVisible: true },
       pagination: { limit: 1 },
     };
 
-    const response = await this.client.get<PostsResponse>('posts', params);
+    const response = await client.get<PostsResponse>('posts', params);
 
     if (response.data && response.data.length > 0) {
       return response.data[0];
     }
 
     return null;
+  }
+
+  private static getStrapiClient(locals: App.Locals) {
+    // const apiUrl = import.meta.env.STRAPI_API_URL;
+    // const apiToken = import.meta.env.STRAPI_API_TOKEN;
+    const { STRAPI_API_URL, STRAPI_API_TOKEN } = locals.runtime.env;
+    return createStrapiClient(STRAPI_API_URL, STRAPI_API_TOKEN);
   }
 }
