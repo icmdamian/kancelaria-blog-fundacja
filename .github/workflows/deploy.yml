@@ -49,6 +49,7 @@ jobs:
 
       - name: Build Astro site
         env:
+          NODE_ENV: production
           STRAPI_API_URL: ${{ env.STRAPI_API_URL }}
           STRAPI_API_TOKEN: ${{ env.STRAPI_API_TOKEN }}
           STRAPI_IMAGES_URL: ${{ env.STRAPI_IMAGES_URL }}
