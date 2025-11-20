@@ -11,6 +11,10 @@ if (!postCategorySlug) {
 }
 
 const response = await StrapiPostEndpoints.getCategoryPosts(Astro.locals, postCategorySlug, 1);
+
+if (!response.data.length) {
+  return Astro.redirect('/404');
+}
 ---
 
 <ArticleListing postsResponse={response} />

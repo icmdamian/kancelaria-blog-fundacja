@@ -12,7 +12,7 @@ interface Props {
 const posts = Astro.props.postsResponse.data;
 const pagination = Astro.props.postsResponse.meta.pagination;
 
-const categorName = posts[0].category.name;
+const categorName = posts.at(0)?.category.name ?? "Nieznana kategoria"
 const title = `${categorName} - Rodzina Bez Długów`;
 const description = `${categorName} - Najnowsze artykuły i porady.`;
 ---
