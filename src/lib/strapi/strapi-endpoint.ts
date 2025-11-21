@@ -1,20 +1,8 @@
 import { pageSize as defautPageSize } from './const';
 import { createStrapiClient } from './strapi-client';
 import type { PostEntity, PostsResponse, StrapiQueryParams } from './types';
-import type { CategoryCount } from './types/category-count';
-import type { PostSlug } from './types/post-slug';
 
 export class StrapiPostEndpoints {
-  public static async getCategoryPostCount(locals: App.Locals): Promise<CategoryCount[]> {
-    const client = StrapiPostEndpoints.getStrapiClient(locals);
-    return client.get<CategoryCount[]>('/categories/post-count');
-  }
-
-  public static async getAllPostSlugs(locals: App.Locals): Promise<PostSlug[]> {
-    const client = StrapiPostEndpoints.getStrapiClient(locals);
-    return client.get<PostSlug[]>('/posts/slugs');
-  }
-
   public static async getCategoryPosts(
     locals: App.Locals,
     categorySlug: string,
@@ -27,6 +15,7 @@ export class StrapiPostEndpoints {
       sort: ['publishedAt:desc'],
       filters: {
         isVisible: true,
+        domain: StrapiPostEndpoints.getDomain(locals),
         category: {
           slug: categorySlug,
         },
@@ -46,7 +35,7 @@ export class StrapiPostEndpoints {
 
     const params: StrapiQueryParams = {
       populate: ['content', 'faq', 'picture', 'content.picture', 'category'],
-      filters: { slug, isVisible: true },
+      filters: { slug, isVisible: true, domain: StrapiPostEndpoints.getDomain(locals) },
       pagination: { limit: 1 },
     };
 
@@ -60,9 +49,17 @@ export class StrapiPostEndpoints {
   }
 
   private static getStrapiClient(locals: App.Locals) {
-    // const apiUrl = import.meta.env.STRAPI_API_URL;
-    // const apiToken = import.meta.env.STRAPI_API_TOKEN;
     const { STRAPI_API_URL, STRAPI_API_TOKEN } = locals.runtime.env;
     return createStrapiClient(STRAPI_API_URL, STRAPI_API_TOKEN);
+  }
+
+  private static getDomain(locals: App.Locals) {
+    const domain = locals.runtime.env.BLOG_DOMAIN;
+
+    if (!domain) {
+      throw new Error('Missing required environment variable BLOG_DOMAIN');
+    }
+
+    return domain;
   }
 }

@@ -27,7 +27,7 @@ if (!post) {
   return Astro.redirect('/404');
 }
 
-const { title, introduction, content, faq, picture } = post;
+const { title, introduction, content, faq, references, picture } = post;
 
 const pageTitle = `${title} - Blog - Rodzina bez długów`;
 const description = extractPlainText(introduction, 160);
@@ -95,6 +95,15 @@ const pictureUrl = picture ? getImageUrl(Astro.locals, picture) : undefined;
                   </li>
                 ))}
               </ul>
+            </div>
+          </section>
+        )
+      }
+      {
+        !!references && (
+          <section class="p-4">
+            <div class="max-w-4xl mx-auto">
+              <BlocksContentRenderer content={references} />
             </div>
           </section>
         )
